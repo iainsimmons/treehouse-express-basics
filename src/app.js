@@ -6,11 +6,18 @@ var express = require('express'),
 var app = express();
 
 app.get('/', function(req, res){
-  res.send("<h1>I love Treehouse!</h1>");
+  res.send("<h1>I am loving Treehouse!</h1>");
 });
 
-app.get('/blog', function(req, res){
-  res.send(posts);
+app.get('/blog/:title?', function(req, res){
+  var title = req.params.title;
+  if (title === undefined) {
+    res.status(503);
+    res.send("This page is under construction!");
+  } else {
+    var post = posts[title];
+    res.send(post);    
+  }
 });
 
 app.listen(3000, function() {
